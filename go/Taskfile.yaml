@@ -1,0 +1,84 @@
+version: "3"
+
+vars:
+  GO: go
+
+tasks:
+  default:
+    desc: Build binary executable aoc_run
+    cmds:
+      - task: build
+
+  generate:
+    desc: Generate run.go if source files change
+    sources:
+      - "**/*.go"
+      - "templates/*.tmpl"
+    cmds:
+      - "{{.GO}} generate"
+
+  run:
+    desc: Run the most recently edited day
+    deps: [generate]
+    cmds:
+      - "{{.GO}} run cmd/main.go"
+
+  runall:
+    desc: Run all days
+    deps: [generate]
+    cmds:
+      - "{{.GO}} run . -a"
+
+  test:
+    desc: Run all tests
+    cmds:
+      - "{{.GO}} test -cover ./utils"
+      - "{{.GO}} test -cover ./day*"
+
+  build:
+    desc: Build binary executable aoc_run
+    deps: [generate]
+    cmds:
+      - "{{.GO}} build -o aoc_run ."
+
+  clean:
+    desc: Clean run.go and aoc_run
+    cmds:
+      - rm -f run.go
+      - rm -f aoc_run
+
+  # Equivalent to 'day%p1' in Makefile
+  # Usage: task start-day DAY=05
+  start-day:
+    desc: Initialize part 1 for a specific day
+    vars:
+      DAY_CLEAN: '{{.DAY | trimPrefix "0"}}'
+    cmds:
+      - "{{.GO}} run ./start -d {{.DAY_CLEAN}}"
+
+  # Equivalent to 'day%p2' in Makefile
+  # Usage: task start-part2 DAY=05
+  start-part2:
+    desc: Initialize part 2 based on part 1
+    deps:
+      - task: start-day
+        vars: { DAY: "{{.DAY}}" }
+    vars:
+      SRC_DIR: "day{{.DAY}}p1"
+      DEST_DIR: "day{{.DAY}}p2"
+    cmds:
+      - mkdir -p {{.DEST_DIR}}
+      - sed -E 's/^package day(.*)p1$/package day\1p2/' {{.SRC_DIR}}/solution.go > {{.DEST_DIR}}/solution.go
+      - sed -E 's/^package day(.*)p1$/package day\1p2/' {{.SRC_DIR}}/solution_test.go > {{.DEST_DIR}}/solution_test.go
+    status:
+      - test -d {{.DEST_DIR}}
+
+  # Equivalent to 'start' in Makefile
+  start:
+    desc: Start today's challenge (or specific day with DAY=XX)
+    vars:
+      CURRENT_DAY: '{{now | date "02"}}'
+      TARGET_DAY: "{{default .CURRENT_DAY .DAY}}"
+    cmds:
+      - task: start-day
+        vars: { DAY: "{{.TARGET_DAY}}" }
