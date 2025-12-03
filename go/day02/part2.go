@@ -31,7 +31,6 @@ func SolvePart2(r io.Reader) any {
 	return total
 }
 
-// 22617871034
 func checkNum(numStr []rune, n int) bool {
 	for i := 1; i <= n; i++ {
 		prev := -1
