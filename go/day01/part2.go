@@ -9,7 +9,6 @@ import (
 )
 
 func SolvePart2(r io.Reader) any {
-	fmt.Println("Running day 1 part 2...")
 	lines := utils.ReadLines(r)
 	fmt.Println(lines)
 

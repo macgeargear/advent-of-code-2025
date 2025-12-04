@@ -10,7 +10,6 @@ import (
 )
 
 func SolvePart1(r io.Reader) any {
-	fmt.Println("Running day 2 part 1...")
 	lines := utils.ReadLines(r)
 	var total int64 = 0
 

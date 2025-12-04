@@ -1,14 +1,12 @@
 package day03
 
 import (
-	"fmt"
 	"io"
 
 	"github.com/macgeargear/advent-of-code-go/utils"
 )
 
 func SolvePart1(r io.Reader) any {
-	fmt.Println("Running day 3 part 1...")
 	lines := utils.ReadLines(r)
 	var total int32 = 0
 
