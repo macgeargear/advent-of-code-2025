@@ -19,9 +19,11 @@ tasks:
 
   run:
     desc: Run the most recently edited day
-    deps: [generate]
+    # deps: [generate]
+    vars:
+      ARGS: "{{if .d}}-d {{.d}}{{end}} {{if .p}}-p {{.p}}{{end}}"
     cmds:
-      - "{{.GO}} run cmd/main.go"
+      - "{{.GO}} run cmd/main.go {{.ARGS}}"
 
   runall:
     desc: Run all days
