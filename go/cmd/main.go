@@ -12,6 +12,8 @@ import (
 	"github.com/macgeargear/advent-of-code-go/day03"
 	"github.com/macgeargear/advent-of-code-go/day04"
 	"github.com/macgeargear/advent-of-code-go/day05"
+	"github.com/macgeargear/advent-of-code-go/day06"
+	"github.com/macgeargear/advent-of-code-go/day07"
 	"github.com/macgeargear/advent-of-code-go/utils"
 	"github.com/spf13/pflag"
 )
@@ -104,6 +106,34 @@ var days = []aocRunnerInput{
 		Func:     day05.SolvePart2,
 		Filename: "day05/input1.txt",
 		Day:      5,
+		Part:     2,
+	},
+	{
+		Name:     "Day 6 part 1",
+		Func:     day06.SolvePart1,
+		Filename: "day06/input1.txt",
+		Day:      6,
+		Part:     1,
+	},
+	{
+		Name:     "Day 6 part 2",
+		Func:     day06.SolvePart2,
+		Filename: "day06/input1.txt",
+		Day:      6,
+		Part:     2,
+	},
+	{
+		Name:     "Day 7 part 1",
+		Func:     day07.SolvePart1,
+		Filename: "day07/input1.txt",
+		Day:      7,
+		Part:     1,
+	},
+	{
+		Name:     "Day 7 part 2",
+		Func:     day07.SolvePart2,
+		Filename: "day07/input1.txt",
+		Day:      7,
 		Part:     2,
 	},
 }
